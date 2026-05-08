@@ -118,6 +118,71 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    if (_initialCamera == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    return Scaffold(
+      appBar: AppBar(title: const Text('Pilih Alamat')),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            GoogleMap(
+              initialCameraPosition: _initialCamera!,
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              mapType: MapType.normal,
+              compassEnabled: true,
+              tiltGesturesEnabled: true,
+              scrollGesturesEnabled: true,
+              zoomControlsEnabled: true,
+              rotateGesturesEnabled: true,
+              trafficEnabled: true,
+              buildingsEnabled: true,
+              indoorViewEnabled: true,
+              onMapCreated: (GoogleMapController ctrl) {
+                _ctrl.complete(ctrl);
+              },
+              markers: _pickedMarker != null ? {_pickedMarker!} : {},
+              onTap: _onTap,
+            ),
+            Positioned(
+              top: 250,
+              left: 50,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  _pickedAddress!,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8),
+          if (_pickedAddress != null)
+            FloatingActionButton.extended(
+              onPressed: _confirmSelection,
+              label: const Text('Pilih alamat'),
+            ),
+          const SizedBox(height: 8),
+          if (_pickedAddress != null)
+            FloatingActionButton.extended(
+              onPressed: () {
+                setState(() {
+                  _pickedAddress = null;
+                  _pickedMarker = null;
+                });
+              },
+              heroTag: 'clear',
+              label: const Text('Hapus Alamat'),
+            ),
+        ],
+      ),
+    );
   }
 }
