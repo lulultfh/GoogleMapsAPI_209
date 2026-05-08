@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -24,7 +25,35 @@ class _MapPageState extends State<MapPage> {
     super.initState();
     _setupLocation();
   }
-  
+
+  Future<void> _setupLocation() async{
+    try{
+      final pos = await.getPermission();
+      _currentPosition = pos;
+      _initialCamera = CameraPosition(
+        target: LatLng(pos.latitude, pos.longitude),
+        zoom: 16);
+
+        final placemarks = await placemarkFromCoordinates(
+          _currentPosition!.latitude,
+          _currentPosition!.longitude
+        );
+
+        final p = placemarks.first;
+        _currentAddress = '${p.name}, ${p.locality}, ${p.country}';
+
+        setState(() {
+          
+        });
+    } catch(e){
+      _initialCamera = const CameraPosition(target: LatLng(0, 0), zoom: 2);
+      setState(() {
+        
+      });
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container();
