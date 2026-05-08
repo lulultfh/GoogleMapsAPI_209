@@ -7,7 +7,10 @@
     <application
         android:label="GMAPS"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:userCleartextTraffic="true">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyDwpDSwk4_QenZx8sbRIxmXngKVc6kqPTE">
         <activity
             android:name=".MainActivity"
             android:exported="true"
