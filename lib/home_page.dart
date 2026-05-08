@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gmaps_flutter/map_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,13 +23,38 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row()
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Pilih alamat'),
+                        IconButton(
+                          icon: const Icon(Icons.map, color: Colors.blue),
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const MapPage(),
+                              ),
+                            );
+                            if (result != null) {
+                              setState(() {
+                                alamatDipilih = result;
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    alamatDipilih == null
+                        ? const Text('Tidak ada alamat yang dipilih')
+                        : Text(alamatDipilih!),
                   ],
-                )
+                ),
               ],
-            )
+            ),
           ],
-        )),
+        ),
+      ),
     );
   }
 }
