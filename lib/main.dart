@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final GoogleMapsFlutterPlatform mapsImplementation = GoogleMapsFlutterPlatform.instance;
+  if(mapsImplementation is GoogleMapsFlutterAndroid){
+    mapsImplementation.useAndroidViewSurface = true;
+    initializeMapRenderer();
+  }
   runApp(const MyApp());
 }
 
