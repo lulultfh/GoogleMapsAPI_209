@@ -145,17 +145,42 @@ class _MapPageState extends State<MapPage> {
               markers: _pickedMarker != null ? {_pickedMarker!} : {},
               onTap: _onTap,
             ),
-            Positioned(
-              top: 250,
-              left: 50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  _pickedAddress!,
-                  style: const TextStyle(fontSize: 12),
+            if (_pickedAddress != null)
+              Positioned(
+                top: 250,
+                left: 50,
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    color: Colors.white70, 
+                    child: Text(
+                      _pickedAddress!,
+                      style: const TextStyle(fontSize: 12),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            // Positioned(
+            //   top: 250,
+            //   left: 50,
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(12),
+            //     child: Container(
+            //       padding: const EdgeInsets.all(8),
+            //       color: Colors
+            //           .white70, // Tambahan: kasih background biar teksnya kelihatan di atas peta
+            //       child: Text(
+            //         _pickedAddress!,
+            //         style: const TextStyle(fontSize: 12),
+            //       ),
+            //     ),
+            //     // child: Text(
+            //     //   _pickedAddress!,
+            //     //   style: const TextStyle(fontSize: 12),
+            //     // ),
+            //   ),
+            // ),
           ],
         ),
       ),
